@@ -10,7 +10,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
+from django.contrib import messages
 
 
 # Create your views here.
@@ -105,6 +105,21 @@ def reply_topic(request, pk, topic_pk):
     else:
         form = PostForm()
     return render(request, 'reply_topic.html', {'topic': topic, 'form': form})
+
+
+@login_required
+def delete_topic(request, pk, topic_pk):
+    topic = get_object_or_404(Topic, board__pk=pk, pk=topic_pk)
+    if request.user == topic.starter or request.user.is_superuser:
+        board_pk = topic.board.pk
+        topic.delete()
+        messages.success(request, 'Topic deleted successfully!')
+        return redirect('board_topics', pk=board_pk)
+    else:
+        messages.error(request, 'You are not authorized to delete this topic!')
+        return redirect('topic_posts', pk=pk, topic_pk=topic_pk)
+
+
 
 @method_decorator(login_required, name='dispatch')
 class PostUpdateView(UpdateView):

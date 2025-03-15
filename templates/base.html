@@ -10,8 +10,16 @@
     {% block stylesheet %}{% endblock %}
   </head>
   <body>
+    {% if messages %}
+  <div class="container mt-3">
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}" role="alert">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
     {% block body %}
-
       <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
         <div class="container">
           <a class="navbar-brand" href="{% url 'home' %}">Talkativ</a>

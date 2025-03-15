@@ -29,11 +29,15 @@
           </td>
           <td class="align-middle">
             {% with post=board.get_last_post %}
-              <small>
+              {% if post and post.topic %}
                 <a href="{% url 'topic_posts' board.pk post.topic.pk %}">
                   By {{ post.created_by.username }} at {{ post.created_at }}
                 </a>
-              </small>
+              {% else %}
+                <small class="text-muted">
+                  <em>No posts yet.</em>
+                </small>
+              {% endif %}
             {% endwith %}
           </td>
         </tr>
@@ -42,7 +46,7 @@
   </table>
 {% endblock %}
 {% with post=board.get_last_post %}
-{% if post %}
+{% if post and post.topic %}
   <small>
     <a href="{% url 'topic_posts' board.pk post.topic.pk %}">
       By {{ post.created_by.username }} at {{ post.created_at }}

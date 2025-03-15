@@ -53,5 +53,5 @@ urlpatterns = [
     path('board/<int:pk>/topics/<int:topic_pk>/reply/', home.reply_topic, name='reply_topic'),
     path('boards/<int:pk>/topics/<int:topic_pk>/posts/<int:post_pk>/edit/',home.PostUpdateView.as_view(), name='edit_post'),
     path('settings/account/', accounts_views.UserUpdateView.as_view(), name='my_account'),
-
+    path('board/<int:pk>/topics/<int:topic_pk>/delete/', home.delete_topic, name = 'delete_topic')
 ]
