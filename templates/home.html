@@ -30,9 +30,13 @@
           <td class="align-middle">
             {% with post=board.get_last_post %}
               {% if post and post.topic %}
-                <a href="{% url 'topic_posts' board.pk post.topic.pk %}">
-                  By {{ post.created_by.username }} at {{ post.created_at }}
-                </a>
+                <div class="d-flex flex-column">
+                  <a href="{% url 'topic_posts' board.pk post.topic.pk %}">
+                    Newest Post
+                  </a>
+                  <br>
+                  <small class="text-muted">at {{ post.created_at }}</small>
+                </div>
               {% else %}
                 <small class="text-muted">
                   <em>No posts yet.</em>
